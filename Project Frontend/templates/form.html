@@ -1,0 +1,20 @@
+<!-- templates/form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Insert Client</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Add New Client</h2>
+    <form method="POST" action="/insert">
+        <label>First Name:</label>
+        <input type="text" name="First_Name" required><br>
+        <label>Last Name:</label>
+        <input type="text" name="Last_name" required><br>
+        <label>Age:</label>
+        <input type="number" name="age" required><br>
+        <button type="submit">Insert</button>
+    </form>
+</body>
+</html>

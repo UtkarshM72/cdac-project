@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>Welcome to the Dashboard</h1>
+
+    {% if success %}
+    <div class="success">✅ Client added successfully!</div>
+    <script>
+        setTimeout(() => {
+            document.querySelector('.success').style.display = 'none';
+        }, 3000);
+    </script>
+    {% endif %}
+
+    <a href="/form" class="btn">➕ Add New Client</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.id }}</td>
+                <td>{{ client.First_Name }}</td>
+                <td>{{ client.Last_name }}</td>
+                <td>{{ client.age }}</td>
+                <td>
+                    {% if session['role'] == 'admin' %}
+                        <form action="/update/{{ client.id }}" method="POST" style="display:inline;">
+                            <input type="text" name="First_Name" value="{{ client.First_Name }}" required>
+                            <input type="text" name="Last_name" value="{{ client.Last_name }}" required>
+                            <input type="number" name="age" value="{{ client.age }}" required>
+                            <button type="submit">Update</button>
+                        </form>
+                        <a href="/delete/{{ client.id }}" onclick="return confirm('Are you sure?')">Delete</a>
+                    {% else %}
+                        👁️ View Only
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a href="/logout">Logout</a>
+</body>
+</html>
