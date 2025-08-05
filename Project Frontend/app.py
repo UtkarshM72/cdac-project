@@ -23,6 +23,7 @@ def login():
 
             if user:
                 session['user'] = username
+                session['role'] = user.get('role', 'user')
                 return redirect('/dashboard')
             else:
                 error = 'Invalid credentials'
@@ -56,7 +57,7 @@ def insert():
 
 @app.route('/delete/<int:id>')
 def delete(id):
-    if session.get('role') != 'admin':
+    if 'role' not in session or session['role'] != 'admin':
         return "Unauthorized", 403
 
     with CONNECTION.cursor() as cursor:
@@ -66,9 +67,9 @@ def delete(id):
 
 @app.route('/update/<int:id>', methods=['POST'])
 def update(id):
-    if session.get('role') != 'admin':
+    if 'role' not in session or session['role'] != 'admin':
         return "Unauthorized", 403
-
+    
     data = request.form
     with CONNECTION.cursor() as cursor:
         cursor.execute("""
