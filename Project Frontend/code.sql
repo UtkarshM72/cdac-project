@@ -1,7 +1,7 @@
 
 CREATE USER 'newuser'@'%' IDENTIFIED BY 'Pass@1234';
-GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'%';
 CREATE DATABASE test1;
+GRANT SELECT, INSERT, UPDATE, DELETE ON test1.* TO 'newuser'@'%';
 USE test1;
 
 CREATE TABLE clients (
